@@ -33,9 +33,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -89,9 +93,43 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\Helvetica CE Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\close-normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\max-normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\min-normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\nofocus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\light-bulb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\shield.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\shield-error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\shield-warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\server-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

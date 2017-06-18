@@ -4,6 +4,128 @@
              xmlns:local="clr-namespace:Forwarder_Server"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border TextBlock.Foreground="#232323" TextBlock.FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" x:Name="Border" CornerRadius="5" BorderThickness="1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="#c7c7c7" Offset="0.0" />
+                                            <GradientStop Color="#c1c1c1" Offset="0.2" />
+                                            <GradientStop Color="#c1c1c1" Offset="0.8" />
+                                            <GradientStop Color="#acacac" Offset="1.0" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <SolidColorBrush Color="#FFFFFF"/>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="5" ShadowDepth="1.5" Direction="270" Color="#CCCCCC" Opacity="0.15"/>
+                            </Border.Effect>
+                            <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#96c3f1"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#569DE5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MainButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border TextBlock.Foreground="#FFFFFF" TextBlock.FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" x:Name="Border" CornerRadius="5" BorderThickness="1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="#4ba2fb" Offset="0.0" />
+                                            <GradientStop Color="#055cff" Offset="1.0" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="#6cb3fa" Offset="0.0" />
+                                            <GradientStop Color="#087eff" Offset="1.0" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="5" ShadowDepth="1.5" Direction="270" Color="#CCCCCC" Opacity="0.15"/>
+                            </Border.Effect>
+                            <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#087eff"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="#00000000" x:Name="OutBorder" CornerRadius="1" BorderThickness="3">
+                            <Border TextBlock.Foreground="#232323" TextBlock.FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" x:Name="Border" CornerRadius="0" BorderThickness="1">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="#B0B0B0"/>
+                                </Border.BorderBrush>
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FFFFFF"/>
+                                </Border.Background>
+                                <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#B0B0B0"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="OutBorder" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#96c3f1"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>
