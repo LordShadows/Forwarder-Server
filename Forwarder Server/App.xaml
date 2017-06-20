@@ -1,8 +1,7 @@
 ﻿<Application x:Class="Forwarder_Server.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Forwarder_Server"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:Forwarder_Server">
     <Application.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Template">
@@ -127,5 +126,24 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <DataTemplate x:Key="templateListBoxItem">
+            <Grid Margin="0">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Resources/account.png" Stretch="Uniform" Height="20" Width="20" Margin="5,0,10,0"></Image>
+                    <StackPanel Orientation="Horizontal" Margin="0">
+                        <Label Content="{Binding Path=ID}" Foreground="DarkGray" FontStyle="Italic" VerticalContentAlignment="Center" Margin="10,0,20,0"/>
+                        <Label Content="{Binding Path=Name}" VerticalContentAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <Style x:Key="styleListBox" TargetType="{x:Type ListBox}">
+            <!--Setter Property="Background" Value="#00000000"/>
+            <Setter Property="BorderBrush" Value="#00000000"/-->
+            <Setter Property="ItemTemplate" Value="{StaticResource templateListBoxItem}"></Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

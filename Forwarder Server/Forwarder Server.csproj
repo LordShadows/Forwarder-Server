@@ -37,6 +37,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -54,10 +55,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
+    <Compile Include="Sources\Cryptography.cs" />
+    <Compile Include="Sources\Functions.cs" />
+    <Compile Include="Sources\Message.cs" />
+    <Compile Include="Sources\Server.cs" />
+    <Compile Include="Sources\User.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -130,6 +136,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\server-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\acc-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\gmessage-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\exit-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\settings-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\account.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\about-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

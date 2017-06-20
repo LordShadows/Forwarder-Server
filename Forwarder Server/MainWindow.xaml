@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forwarder_Server"
         mc:Ignorable="d"
-        Title="Forwarder Server 1.0" Height="394" Width="644" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None" StateChanged="Window_StateChanged" WindowStartupLocation="CenterScreen" Foreground="#FF232323" Activated="Window_Activated" Deactivated="Window_Deactivated" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE">
+        Title="Forwarder Server 1.0" Height="527" Width="802" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None" StateChanged="Window_StateChanged" WindowStartupLocation="CenterScreen" Foreground="#FF232323" Activated="Window_Activated" Deactivated="Window_Deactivated" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE">
     <Grid x:Name="body" Margin="20">
         <Rectangle x:Name="leftResize" Fill="#00000000" Margin="-5,0" StrokeThickness="0" Cursor="SizeWE" MouseMove="LeftResize_MouseMove" MouseLeftButtonDown="Resize_MouseLeftButtonDown" MouseLeftButtonUp="Resize_MouseLeftButtonUp" HorizontalAlignment="Left" Width="5"/>
         <Rectangle x:Name="topResize" Fill="#00000000" Margin="0,-5" StrokeThickness="0" Cursor="SizeNS" MouseMove="TopResize_MouseMove" MouseLeftButtonDown="Resize_MouseLeftButtonDown" MouseLeftButtonUp="Resize_MouseLeftButtonUp" Height="5" VerticalAlignment="Top"/>
@@ -27,7 +27,7 @@
                     <LinearGradientBrush.GradientStops>
                         <GradientStopCollection>
                             <GradientStop Color="#FF454545" Offset="0.0" />
-                            <GradientStop Color="#FF404040" Offset="1.0" />
+                            <GradientStop Color="#FF404040" Offset="0.997" />
                         </GradientStopCollection>
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
@@ -60,18 +60,71 @@
                 <ColumnDefinition Width="65"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Style ="{StaticResource MainButtonStyle}" Content="Открыть сообщение" HorizontalAlignment="Right" Margin="0,0,21,15" VerticalAlignment="Bottom" Width="188" HorizontalContentAlignment="Center" Click="Button_Click" Cursor="Hand" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" Height="22" Grid.Column="1"/>
-            <TextBox x:Name="tbTextMessage" Style="{StaticResource TextBoxStyle}" Height="28" Margin="134,253,18,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF232323" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" VerticalContentAlignment="Bottom" Grid.Column="1"/>
             <Border BorderBrush="#FFE8E8E8" BorderThickness="0,0,1,0" Margin="0" Background="#FFF0F0F0" CornerRadius="0,0,0,5">
-                <StackPanel>
-                    <Grid Height="50" Background="#FFC8C8C8">
-                        <Image Source="Resources/server-icon.png" Margin="0" Cursor="Hand" Height="40"/>
-                    </Grid>
-                </StackPanel>
+                <Grid>
+                    <StackPanel Margin="0,0,0,164">
+                        <Grid x:Name="serverButton" Height="50" Background="#FFC8C8C8" MouseLeftButtonDown="ServerButton_MouseLeftButtonDown" ToolTip="Журнал">
+                            <Image Source="Resources/server-icon.png" Margin="0" Cursor="Hand" Height="40"/>
+                        </Grid>
+                        <Grid x:Name="userBotton" Height="50" MouseLeftButtonDown="UserBotton_MouseLeftButtonDown" ToolTip="Пользователи">
+                            <Image Margin="0" Cursor="Hand" Height="40" Source="Resources/acc-icon.png"/>
+                        </Grid>
+                        <Grid x:Name="globalMessageBotton" Height="50" MouseLeftButtonDown="GlobalMessageBotton_MouseLeftButtonDown" ToolTip="Глобальное оповещение">
+                            <Image Margin="0,7,0,3" Cursor="Hand" Height="40" Source="Resources/gmessage-icon.png"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Height="159" VerticalAlignment="Bottom">
+                        <Grid x:Name="aboutMessageBotton" Height="50" Margin="0" MouseLeftButtonDown="aboutMessageBotton_MouseLeftButtonDown" MouseLeftButtonUp="aboutMessageBotton_MouseLeftButtonUp" ToolTip="О программе">
+                            <Image Margin="0" Cursor="Hand" Height="40" Source="Resources/about-icon.png"/>
+                        </Grid>
+                        <Grid x:Name="settingMessageBotton" Height="50" Margin="00" MouseLeftButtonDown="SettingMessageBotton_MouseLeftButtonDown" MouseLeftButtonUp="settingMessageBotton_MouseLeftButtonUp" ToolTip="Настройки">
+                            <Image Margin="0" Cursor="Hand" Height="40" Source="Resources/settings-icon.png"/>
+                        </Grid>
+                        <Grid x:Name="exitMessageBotton" Height="50" Margin="0" MouseLeftButtonDown="exitMessageBotton_MouseLeftButtonDown" MouseLeftButtonUp="exitMessageBotton_MouseLeftButtonUp" ToolTip="Завершить работу сервера">
+                            <Image Margin="0" Cursor="Hand" Height="40" Source="Resources/exit-icon.png"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
             </Border>
-            <Label Content="Текст сообщения:" HorizontalAlignment="Left" Margin="21,256,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="108"/>
-            <ListBox x:Name="lbMessages" Margin="21,27,21,81" Grid.Column="1"/>
-            <Label Content="Сообщения:" HorizontalAlignment="Left" Margin="21,2,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="78"/>
+            <TabControl x:Name="tcPages" Margin="0,0,5,5" TabStripPlacement="Right" Background="#FFF9F9F9" BorderBrush="{x:Null}" Grid.Column="1" SelectionChanged="TCPages_SelectionChanged" SelectedIndex="0">
+                <TabItem Header="MainPage" Height="0" Width="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="33"/>
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="tbTextMessage" Style="{StaticResource TextBoxStyle}" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF232323" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" VerticalContentAlignment="Center" Margin="330,3,7,0"/>
+                        <Label Content="Поиск:" HorizontalAlignment="Left" Width="53" Margin="276,5,0,0" Height="26" VerticalAlignment="Top"/>
+                        <ListBox x:Name="lbMessages" Margin="15,37,10,5"/>
+                        <Label Content="Журнал:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="78" Margin="15,5,0,0"/>
+                        <Button Content="Очистить журнал" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,5,189,0" VerticalAlignment="Top" Width="152" Grid.Row="1" Cursor="Hand"/>
+                        <Button Content="Сохранить как ..." Style="{StaticResource MainButtonStyle}" HorizontalAlignment="Right" Margin="0,5,10,0" VerticalAlignment="Top" Width="160" Grid.Row="1" Cursor="Hand"/>
+                        <Image Width="22" Margin="260,7,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Resources/search.png"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="PageClients" Height="0" Width="0">
+                    <Grid>
+                        <ListBox x:Name="lbUsers" Style="{StaticResource styleListBox}" Margin="15,37,10,70"/>
+                        <Label Content="Подключенные пользователи:" HorizontalAlignment="Left" Margin="15,5,0,0" VerticalAlignment="Top"/>
+                        <TextBox Style="{StaticResource TextBoxStyle}" Height="28" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="330,3,7,0" VerticalAlignment="Top"/>
+                        <Label Content="Поиск:" HorizontalAlignment="Left" Margin="276,5,0,0" VerticalAlignment="Top"/>
+                        <Button Content="Отключить клиента" Style="{StaticResource ButtonStyle}" Margin="0,0,10,39" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="181" Cursor="Hand" ToolTip="Будет прервана связь с выбранным пользователем."/>
+                        <Label Content="Введите сообщение:" Height="23" Width="128" Margin="15,0,0,6" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                        <TextBox Height="28" Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Margin="148,0,205,3" VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
+                        <Button Content="Отправить сообщение" Style="{StaticResource MainButtonStyle}" HorizontalAlignment="Right" Margin="0,0,10,6" Width="181" Height="22" VerticalAlignment="Bottom" Cursor="Hand" ToolTip="Вы можете отправить сообщение пользователю."/>
+                        <Image Width="22" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Resources/search.png" Margin="260,7,0,0"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="PageGlobalMessage" Height="0" Width="0">
+                    <Grid>
+                        <Label Content="Используя данную функцию вы разошлете сообщение всем подключенным клиентам." Height="29" Width="547" HorizontalAlignment="Left" Margin="15,5,0,0" VerticalAlignment="Top" FontStyle="Italic" Background="{x:Null}" Foreground="#FF5B5B5B"/>
+                        <TextBox Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Margin="12,60,7,280" UndoLimit="1000"/>
+                        <Button Content="Отправить сообщение" Style="{StaticResource MainButtonStyle}" Width="170" Margin="0,0,10,253" HorizontalAlignment="Right" Height="22" VerticalAlignment="Bottom" Cursor="Hand"/>
+                        <Label Content="Ваше сообщение:" HorizontalAlignment="Left" Margin="15,34,0,0" VerticalAlignment="Top"/>
+                    </Grid>
+                </TabItem>
+
+            </TabControl>
         </Grid>
     </Grid>
 </Window>
