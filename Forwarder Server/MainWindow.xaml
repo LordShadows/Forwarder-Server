@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Forwarder_Server"
         mc:Ignorable="d"
         Title="Forwarder Server 1.0" Height="527" Width="802" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None" StateChanged="Window_StateChanged" WindowStartupLocation="CenterScreen" Foreground="#FF232323" Activated="Window_Activated" Deactivated="Window_Deactivated" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE">
-    <Grid x:Name="body" Margin="20">
+    <Grid x:Name="body" Margin="20" SnapsToDevicePixels="True">
         <Rectangle x:Name="leftResize" Fill="#00000000" Margin="-5,0" StrokeThickness="0" Cursor="SizeWE" MouseMove="LeftResize_MouseMove" MouseLeftButtonDown="Resize_MouseLeftButtonDown" MouseLeftButtonUp="Resize_MouseLeftButtonUp" HorizontalAlignment="Left" Width="5"/>
         <Rectangle x:Name="topResize" Fill="#00000000" Margin="0,-5" StrokeThickness="0" Cursor="SizeNS" MouseMove="TopResize_MouseMove" MouseLeftButtonDown="Resize_MouseLeftButtonDown" MouseLeftButtonUp="Resize_MouseLeftButtonUp" Height="5" VerticalAlignment="Top"/>
         <Rectangle x:Name="bottomResize" Fill="#00000000" Margin="0,0,0,-5" StrokeThickness="0" Cursor="SizeNS" MouseMove="BottomResize_MouseMove" MouseLeftButtonDown="Resize_MouseLeftButtonDown" MouseLeftButtonUp="Resize_MouseLeftButtonUp" Height="5" VerticalAlignment="Bottom"/>
@@ -52,7 +52,7 @@
                         </Rectangle>
                     </Grid>
                 </Border>
-                <Label x:Name="mainTitile" Content="FORWARDER Server 1.0 by Daniel Sandrutski" Margin="75,-1,75,-2" VerticalAlignment="Top" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="11" Foreground="#99FFFFFF"/>
+                <Label x:Name="mainTitile" Content="Forwarder Server 1.0" Margin="75,-1,75,-2" VerticalAlignment="Top" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#99FFFFFF"/>
             </Grid>
         </Border>
         <Grid x:Name="Content" Margin="1,24,1,1">
@@ -97,8 +97,8 @@
                         <Label Content="Поиск:" HorizontalAlignment="Left" Width="53" Margin="276,5,0,0" Height="26" VerticalAlignment="Top"/>
                         <ListBox x:Name="lbMessages" Margin="15,37,10,5"/>
                         <Label Content="Журнал:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="78" Margin="15,5,0,0"/>
-                        <Button Content="Очистить журнал" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,5,189,0" VerticalAlignment="Top" Width="152" Grid.Row="1" Cursor="Hand"/>
-                        <Button Content="Сохранить как ..." Style="{StaticResource MainButtonStyle}" HorizontalAlignment="Right" Margin="0,5,10,0" VerticalAlignment="Top" Width="160" Grid.Row="1" Cursor="Hand"/>
+                        <Button Content="Очистить журнал" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,5,189,0" VerticalAlignment="Top" Width="152" Grid.Row="1" Cursor="Hand" Height="22"/>
+                        <Button Content="Сохранить как ..." Style="{StaticResource MainButtonStyle}" HorizontalAlignment="Right" Margin="0,5,10,0" VerticalAlignment="Top" Width="160" Grid.Row="1" Cursor="Hand" Height="22"/>
                         <Image Width="22" Margin="260,7,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Resources/search.png"/>
                     </Grid>
                 </TabItem>

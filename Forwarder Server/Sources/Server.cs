@@ -26,6 +26,7 @@ namespace Forwarder_Server.Sources
             SERVERSOCKET.Bind(new IPEndPoint(address, PORT));
             SERVERSOCKET.Listen(100);
             Functions.AddJournalEntry($": __SERVER__ Сервер готов к работе. Хост/порт: {HOST}:{PORT}");
+            DatabaseWork.Test();
             while (Work)
             {
                 Socket handle = SERVERSOCKET.Accept();

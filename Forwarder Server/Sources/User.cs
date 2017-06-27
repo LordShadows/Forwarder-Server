@@ -16,9 +16,12 @@ namespace Forwarder_Server.Sources
         private Thread USERTHREAD;
         private Socket USERHANDLE;
         private String USERNAME;
+        private String USERLOGIN;
+        private String USERROLE;
         private String USERID;
+        private String USERSNAPPING;
 
-        private bool AuthSuccess = false;
+        private bool AUTHSUCCESS = false;
 
         private Cryptography cryptography;
         private Functions functions;
@@ -28,9 +31,19 @@ namespace Forwarder_Server.Sources
             get { return USERID; }
         }
 
+        public bool AuthSuccess
+        {
+            get { return AUTHSUCCESS; }
+        }
+
         public string UserName
         {
             get { return USERNAME; }
+        }
+
+        public string UserRole
+        {
+            get { return USERROLE; }
         }
 
         public User(Socket handle)
@@ -57,6 +70,7 @@ namespace Forwarder_Server.Sources
                 {
                     byte[] buffer = new byte[4096];
                     int bytesReceive = USERHANDLE.Receive(buffer);
+                    Functions.AddJournalEntry($"<<<<<! {Encoding.UTF8.GetString(buffer, 0, bytesReceive)}");
                     String message = Encoding.UTF8.GetString(buffer, 0, bytesReceive);
                     if (message.Contains("$Directives$"))
                         HandleDirectiveCommand(message);
@@ -79,19 +93,21 @@ namespace Forwarder_Server.Sources
             }
         }
 
-        private bool setName(string Name) //Переписать
+        public void Authentication(String login, String name, String role, String snapping)
         {
-            //Тут можно добавить различные проверки
-            USERNAME = Name;
-            AuthSuccess = true;
-            return true;
+            USERNAME = name;
+            USERLOGIN = login;
+            USERROLE = role;
+            USERSNAPPING = snapping;
+            AUTHSUCCESS = true;
         }
 
         public void HandleCommand(Message message)
         {
             try
             {
-                if(cryptography.GetHash(message.TextArguments) != message.Signature)
+                Functions.AddJournalEntry($"<<<<<Key {message.Keyword}");
+                if (cryptography.GetHash(message.TextArguments) != message.Signature)
                 {
                     Functions.AddJournalEntry($": __ERROR__ {USERID} {USERNAME} Сообщение повреждено.");
                     return;
@@ -102,12 +118,37 @@ namespace Forwarder_Server.Sources
                     case "AuthenticationAttempt":
                         Functions.AuthenticationAttempt(message.TextArguments[0], message.TextArguments[1], this);
                         break;
-                    case "Message":
-                        Functions.AddJournalEntry(message.TextArguments[0]);
+                    case "UpdateUsersData":
+                        Functions.UpdateUsersData(this);
+                        break;
+                    case "UpdateEngineersData":
+                        Functions.UpdateEngineersData(this);
+                        break;
+                    case "UpdateForwardersData":
+                        Functions.UpdateForwardersData(this);
+                        break;
+                    case "UpdateAllData":
+                        switch (USERROLE)
+                        {
+                            case "Администратор":
+                                Functions.UpdateEngineersData(this);
+                                Functions.UpdateForwardersData(this);
+                                Functions.UpdateCompaniesData(this);
+                                Functions.UpdateRequestsData(this);
+
+                                Functions.UpdateUsersData(this);
+                                break;
+                            case "Инженер":
+                                break;
+                            case "Экспедитор":
+                                break;
+                            case "Руководитель экспедиторов":
+                                break;
+                        }
                         break;
                 }
             }
-            catch (NullReferenceException ignore)
+            catch (NullReferenceException)
             {
                 Functions.AddJournalEntry($": __ERROR__ {USERID} {USERNAME} Утрата соединения с пользователем.");
                 Server.EndUser(this);
@@ -128,7 +169,7 @@ namespace Forwarder_Server.Sources
                     cryptography.GetAESKey(message.Replace("$AESKeys$", ""));
                 }
             }
-            catch (NullReferenceException ignore)
+            catch (NullReferenceException)
             {
                 Functions.AddJournalEntry($": __ERROR__ {USERID} {USERNAME} Утрата соединения с пользователем.");
                 Server.EndUser(this);
@@ -144,12 +185,13 @@ namespace Forwarder_Server.Sources
             String signature = cryptography.GetHash(textArguments);
             Message message = new Message(keyword, textArguments, signature);
             String json = JsonConvert.SerializeObject(message);
-            USERHANDLE.Send(Encoding.UTF8.GetBytes(cryptography.Encrypt_AES_String(json)));
+            Functions.AddJournalEntry($": >>>>>> {Encoding.UTF8.GetBytes(cryptography.Encrypt_AES_String(json)).Length} >>> { cryptography.Encrypt_AES_String(json).Length } >>> { json.Length } >>> {json}");
+            USERHANDLE.Send(Encoding.UTF8.GetBytes(cryptography.Encrypt_AES_String(json) + "$END$"));
         }
 
         public void Send(string Buffer)
         {
-            USERHANDLE.Send(Encoding.UTF8.GetBytes(Buffer));
+            USERHANDLE.Send(Encoding.UTF8.GetBytes(Buffer + "$END$"));
         }
 
         public void End()

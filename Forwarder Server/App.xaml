@@ -7,7 +7,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border TextBlock.Foreground="#232323" TextBlock.FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" x:Name="Border" CornerRadius="5" BorderThickness="1">
+                        <Border TextBlock.Foreground="#232323" SnapsToDevicePixels="True" TextBlock.FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" x:Name="Border" CornerRadius="5" BorderThickness="1">
                             <Border.BorderBrush>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
@@ -29,17 +29,65 @@
                             <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="true">
-                                <Setter TargetName="Border" Property="BorderBrush">
-                                    <Setter.Value>
-                                        <SolidColorBrush Color="#96c3f1"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter TargetName="Border" Property="BorderBrush">
                                     <Setter.Value>
-                                        <SolidColorBrush Color="#569DE5"/>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="#4A77B8" Offset="0.0" />
+                                                    <GradientStop Color="#0047D4" Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="#4C97FD" Offset="0.0" />
+                                                    <GradientStop Color="#1161EE" Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="TextBlock.Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FFFFFF"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#F7F7F7"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="TextBlock.Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#BCBCBC"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Opacity="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="#E0DFE0" Offset="0.0" />
+                                                    <GradientStop Color="#D9D8D9" Offset="0.2" />
+                                                    <GradientStop Color="#D9D8D9" Offset="0.8" />
+                                                    <GradientStop Color="#D2D1D2" Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -53,7 +101,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border TextBlock.Foreground="#FFFFFF" TextBlock.FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" x:Name="Border" CornerRadius="5" BorderThickness="1">
+                        <Border TextBlock.Foreground="#FFFFFF" SnapsToDevicePixels="True" TextBlock.FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" x:Name="Border" CornerRadius="5" BorderThickness="1">
                             <Border.BorderBrush>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
@@ -83,7 +131,57 @@
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter TargetName="Border" Property="Background">
                                     <Setter.Value>
-                                        <SolidColorBrush Color="#087eff"/>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="#287CF0" Offset="0.0" />
+                                                    <GradientStop Color="#223F8F" Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="#4498FF" Offset="0.0" />
+                                                    <GradientStop Color="#0A67DE" Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#F7F7F7"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="TextBlock.Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#BCBCBC"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Opacity="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="#E0DFE0" Offset="0.0" />
+                                                    <GradientStop Color="#D9D8D9" Offset="0.2" />
+                                                    <GradientStop Color="#D9D8D9" Offset="0.8" />
+                                                    <GradientStop Color="#D2D1D2" Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
