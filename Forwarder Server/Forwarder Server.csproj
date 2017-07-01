@@ -75,9 +75,11 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="ClassResource\Company.cs" />
+    <Compile Include="ClassResource\Destination.cs" />
     <Compile Include="ClassResource\Engineer.cs" />
     <Compile Include="ClassResource\Forwarder.cs" />
     <Compile Include="ClassResource\Request.cs" />
+    <Compile Include="ClassResource\Route.cs" />
     <Compile Include="ClassResource\User.cs" />
     <Compile Include="Sources\Cryptography.cs" />
     <Compile Include="Sources\DatabaseWork.cs" />

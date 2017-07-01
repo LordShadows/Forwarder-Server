@@ -99,7 +99,7 @@ namespace Forwarder_Server.Sources
             }
         }
 
-        public static void ExecuteUpdate(String inquiry)
+        public static String ExecuteUpdate(String inquiry)
         {
 
             SqlConnection сonnection = new SqlConnection(connectionString);
@@ -108,10 +108,15 @@ namespace Forwarder_Server.Sources
                 SqlCommand command = new SqlCommand(inquiry, сonnection);
                 сonnection.Open();
                 command.ExecuteNonQuery();
+                return "OK";
             }
             catch (Exception exp)
             {
                 Functions.AddJournalEntry(": __ERROR DATABASE__ Ошибка при подключении к базе данных: " + exp.Message);
+                if (exp.Message.Contains("The DELETE statement conflicted with the REFERENCE"))
+                    return "REFERENCE Conflicted";
+                else
+                    return "Error";
             }
             finally
             {  

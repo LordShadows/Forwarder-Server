@@ -24,7 +24,7 @@ namespace Forwarder_Server.Sources
         private bool AUTHSUCCESS = false;
 
         private Cryptography cryptography;
-        private Functions functions;
+        public Functions functions;
 
         public string UserID
         {
@@ -44,6 +44,11 @@ namespace Forwarder_Server.Sources
         public string UserRole
         {
             get { return USERROLE; }
+        }
+
+        public string UserSnapping
+        {
+            get { return USERSNAPPING; }
         }
 
         public User(Socket handle)
@@ -70,7 +75,6 @@ namespace Forwarder_Server.Sources
                 {
                     byte[] buffer = new byte[4096];
                     int bytesReceive = USERHANDLE.Receive(buffer);
-                    Functions.AddJournalEntry($"<<<<<! {Encoding.UTF8.GetString(buffer, 0, bytesReceive)}");
                     String message = Encoding.UTF8.GetString(buffer, 0, bytesReceive);
                     if (message.Contains("$Directives$"))
                         HandleDirectiveCommand(message);
@@ -106,7 +110,6 @@ namespace Forwarder_Server.Sources
         {
             try
             {
-                Functions.AddJournalEntry($"<<<<<Key {message.Keyword}");
                 if (cryptography.GetHash(message.TextArguments) != message.Signature)
                 {
                     Functions.AddJournalEntry($": __ERROR__ {USERID} {USERNAME} Сообщение повреждено.");
@@ -116,29 +119,97 @@ namespace Forwarder_Server.Sources
                 switch (message.Keyword)
                 {
                     case "AuthenticationAttempt":
-                        Functions.AuthenticationAttempt(message.TextArguments[0], message.TextArguments[1], this);
+                        functions.AuthenticationAttempt(message.TextArguments[0], message.TextArguments[1], this);
                         break;
                     case "UpdateUsersData":
-                        Functions.UpdateUsersData(this);
+                        functions.UpdateUsersData(this);
                         break;
                     case "UpdateEngineersData":
-                        Functions.UpdateEngineersData(this);
+                        functions.UpdateEngineersData(this);
                         break;
                     case "UpdateForwardersData":
-                        Functions.UpdateForwardersData(this);
+                        functions.UpdateForwardersData(this);
+                        break;
+                    case "AddRequest":
+                        functions.AddRequest(message.TextArguments[0], this);
+                        break;
+                    case "AddCompany":
+                        functions.AddCompany(message.TextArguments[0], this);
+                        break;
+                    case "UpdateCompany":
+                        functions.UpdateCompany(message.TextArguments[0], this);
+                        break;
+                    case "DeleteCompany":
+                        functions.DeleteCompany(message.TextArguments[0], this);
+                        break;
+                    case "AddForwarder":
+                        functions.AddForwarder(message.TextArguments[0], this);
+                        break;
+                    case "UpdateForwarder":
+                        functions.UpdateForwarder(message.TextArguments[0], this);
+                        break;
+                    case "DeleteForwarder":
+                        functions.DeleteForwarder(message.TextArguments[0], this);
+                        break;
+                    case "AddEngineer":
+                        functions.AddEngineer(message.TextArguments[0], this);
+                        break;
+                    case "UpdateEngineer":
+                        functions.UpdateEngineer(message.TextArguments[0], this);
+                        break;
+                    case "DeleteEngineer":
+                        functions.DeleteEngineer(message.TextArguments[0], this);
+                        break;
+                    case "AddUser":
+                        functions.AddUser(message.TextArguments[0], this);
+                        break;
+                    case "UpdateUser":
+                        functions.UpdateUser(message.TextArguments[0], this);
+                        break;
+                    case "DeleteUser":
+                        functions.DeleteUser(message.TextArguments[0], this);
+                        break;
+                    case "AddRoute":
+                        functions.AddRoute(this);
+                        break;
+                    case "DeleteRoute":
+                        functions.DeleteRoute(message.TextArguments[0], this);
+                        break;
+                    case "UpdateRoute":
+                        functions.UpdateRoute(message.TextArguments[0], this);
+                        break;
+                    case "ChangeRouteStatus":
+                        functions.ChangeRouteStatus(message.TextArguments[0],  message.TextArguments[1], this);
+                        break;
+                    case "UpdateDestination":
+                        functions.UpdateDestination(message.TextArguments[0], this);
+                        break;
+                    case "ChangeDestinationNumber":
+                        functions.ChangeDestinationNumber(message.TextArguments[0], message.TextArguments[1], this);
+                        break;
+                    case "DeleteDestination":
+                        functions.DeleteDestination(message.TextArguments[0], this);
+                        break;
+                    case "RequestDistribute":
+                        functions.RequestDistribute(message.TextArguments[0], message.TextArguments[1], this);
                         break;
                     case "UpdateAllData":
                         switch (USERROLE)
                         {
                             case "Администратор":
-                                Functions.UpdateEngineersData(this);
-                                Functions.UpdateForwardersData(this);
-                                Functions.UpdateCompaniesData(this);
-                                Functions.UpdateRequestsData(this);
-
-                                Functions.UpdateUsersData(this);
+                                functions.UpdateEngineersData(this);
+                                functions.UpdateForwardersData(this);
+                                functions.UpdateCompaniesData(this);
+                                functions.UpdateRequestsData(this);
+                                functions.UpdateDestinationsData(this);
+                                functions.UpdateRoutesData(this);
+                                functions.UpdateUsersData(this);
                                 break;
                             case "Инженер":
+                                functions.UpdateEngineersData(this);
+                                functions.UpdateForwardersData(this);
+                                functions.UpdateCompaniesData(this);
+                                functions.UpdateRequestsData(this);
                                 break;
                             case "Экспедитор":
                                 break;
@@ -185,7 +256,6 @@ namespace Forwarder_Server.Sources
             String signature = cryptography.GetHash(textArguments);
             Message message = new Message(keyword, textArguments, signature);
             String json = JsonConvert.SerializeObject(message);
-            Functions.AddJournalEntry($": >>>>>> {Encoding.UTF8.GetBytes(cryptography.Encrypt_AES_String(json)).Length} >>> { cryptography.Encrypt_AES_String(json).Length } >>> { json.Length } >>> {json}");
             USERHANDLE.Send(Encoding.UTF8.GetBytes(cryptography.Encrypt_AES_String(json) + "$END$"));
         }
 

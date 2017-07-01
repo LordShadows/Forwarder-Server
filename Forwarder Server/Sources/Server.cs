@@ -81,5 +81,82 @@ namespace Forwarder_Server.Sources
                 USERSLIST[i].End();
             }
         }
+
+        public static void UpdateRequests()
+        {
+            foreach (User user in USERSLIST)
+            {
+                if (user.AuthSuccess)
+                {
+                    user.functions.UpdateRequestsData(user);
+                }
+            }
+        }
+
+        public static void UpdateCompanies()
+        {
+            foreach (User user in USERSLIST)
+            {
+                if (user.AuthSuccess)
+                {
+                    user.functions.UpdateCompaniesData(user);
+                }
+            }
+        }
+
+        public static void UpdateForwarders()
+        {
+            foreach (User user in USERSLIST)
+            {
+                if (user.AuthSuccess)
+                {
+                    user.functions.UpdateForwardersData(user);
+                }
+            }
+        }
+
+        public static void UpdateEngineer()
+        {
+            foreach (User user in USERSLIST)
+            {
+                if (user.AuthSuccess)
+                {
+                    user.functions.UpdateEngineersData(user);
+                }
+            }
+        }
+
+        public static void UpdateUsers()
+        {
+            foreach (User user in USERSLIST)
+            {
+                if (user.AuthSuccess)
+                {
+                    user.functions.UpdateUsersData(user);
+                }
+            }
+        }
+
+        public static void UpdateRoutes()
+        {
+            foreach (User user in USERSLIST)
+            {
+                if (user.AuthSuccess)
+                {
+                    user.functions.UpdateRoutesData(user);
+                }
+            }
+        }
+
+        public static void UpdateDestinations()
+        {
+            foreach (User user in USERSLIST)
+            {
+                if (user.AuthSuccess)
+                {
+                    user.functions.UpdateDestinationsData(user);
+                }
+            }
+        }
     }
 }
