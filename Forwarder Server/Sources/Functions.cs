@@ -16,6 +16,7 @@ namespace Forwarder_Server.Sources
             MAINWINDOW.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
             {
                 MAINWINDOW.lbMessages.Items.Add($"> {DateTime.Now.ToString()} {entry}");
+                MainWindow.Journal.Add($"> {DateTime.Now.ToString()} {entry}");
             }));
         }
 
@@ -199,7 +200,7 @@ namespace Forwarder_Server.Sources
         {
             if (user.AuthSuccess == true)
             {
-                System.Data.DataTable tempTable = DatabaseWork.ExecuteQuery("SELECT * FROM Routes ORDER BY [Route status] DESC, [Departure date], [Name]");
+                System.Data.DataTable tempTable = DatabaseWork.ExecuteQuery("SELECT * FROM Routes ORDER BY [Route status] DESC, [Departure date] DESC, [Name]");
                 List<ClassResource.Route> tempList = new List<ClassResource.Route>();
                 for (int i = 0; i < tempTable.Rows.Count; ++i)
                 {
@@ -610,9 +611,47 @@ namespace Forwarder_Server.Sources
             }
         }
 
+        public void DeleteRequest(String request, User user)
+        {
+            if (user.AuthSuccess == true && (user.UserRole == "Инженер" || user.UserRole == "Администратор"))
+            {
+                DatabaseWork.ExecuteUpdate($"DELETE FROM Requests WHERE [ID request] = '{request}'");
+                Server.UpdateRequests();
+            }
+            else
+            {
+                Functions.AddJournalEntry($": __ATTENTION__ {user.UserID} {user.UserName} Попытка доступа без соответствующих прав.");
+            }
+        }
+
+        public void UpdateRequest(String stringRequest, User user)
+        {
+            if (user.AuthSuccess == true && (user.UserRole == "Инженер" || user.UserRole == "Администратор"))
+            {
+                ClassResource.Request request = JsonConvert.DeserializeObject<ClassResource.Request>(stringRequest);
+                DatabaseWork.ExecuteUpdate("UPDATE Requests SET " +
+                    "[Product weight] = N'" + request.ProductWeight + "'," +
+                    "[Product dimensions] = N'" + request.ProductDimensions + "'," +
+                    "[Quantity] = '" + request.Quantity + "' " +
+                    "WHERE [ID request] = '" + request.ID + "'");
+                Server.UpdateRequests();
+            }
+            else
+            {
+                Functions.AddJournalEntry($": __ATTENTION__ {user.UserID} {user.UserName} Попытка доступа без соответствующих прав.");
+            }
+        }
+
         public static void UpdateUserList()
         {
-
+            MAINWINDOW.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+            {
+                MAINWINDOW.lbUsers.Items.Clear();
+                foreach (var item in Server.USERSLIST)
+                {
+                    MAINWINDOW.lbUsers.Items.Add(new MainWindow.AccountDataContext(item.UserID, item.UserName + " (" + item.UserRole + ")"));
+                } 
+            }));
         }
     }
 }

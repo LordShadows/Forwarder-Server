@@ -193,6 +193,12 @@ namespace Forwarder_Server.Sources
                     case "RequestDistribute":
                         functions.RequestDistribute(message.TextArguments[0], message.TextArguments[1], this);
                         break;
+                    case "DeleteRequest":
+                        functions.DeleteRequest(message.TextArguments[0], this);
+                        break;
+                    case "UpdateRequest":
+                        functions.UpdateRequest(message.TextArguments[0], this);
+                        break;
                     case "UpdateAllData":
                         switch (USERROLE)
                         {
@@ -210,10 +216,24 @@ namespace Forwarder_Server.Sources
                                 functions.UpdateForwardersData(this);
                                 functions.UpdateCompaniesData(this);
                                 functions.UpdateRequestsData(this);
+                                functions.UpdateDestinationsData(this);
+                                functions.UpdateRoutesData(this);
                                 break;
                             case "Экспедитор":
+                                functions.UpdateEngineersData(this);
+                                functions.UpdateForwardersData(this);
+                                functions.UpdateCompaniesData(this);
+                                functions.UpdateRequestsData(this);
+                                functions.UpdateDestinationsData(this);
+                                functions.UpdateRoutesData(this);
                                 break;
                             case "Руководитель экспедиторов":
+                                functions.UpdateEngineersData(this);
+                                functions.UpdateForwardersData(this);
+                                functions.UpdateCompaniesData(this);
+                                functions.UpdateRequestsData(this);
+                                functions.UpdateDestinationsData(this);
+                                functions.UpdateRoutesData(this);
                                 break;
                         }
                         break;

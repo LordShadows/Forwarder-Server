@@ -73,13 +73,7 @@
                             <Image Margin="0,7,0,3" Cursor="Hand" Height="40" Source="Resources/gmessage-icon.png"/>
                         </Grid>
                     </StackPanel>
-                    <StackPanel Height="159" VerticalAlignment="Bottom">
-                        <Grid x:Name="aboutMessageBotton" Height="50" Margin="0" MouseLeftButtonDown="aboutMessageBotton_MouseLeftButtonDown" MouseLeftButtonUp="aboutMessageBotton_MouseLeftButtonUp" ToolTip="О программе">
-                            <Image Margin="0" Cursor="Hand" Height="40" Source="Resources/about-icon.png"/>
-                        </Grid>
-                        <Grid x:Name="settingMessageBotton" Height="50" Margin="00" MouseLeftButtonDown="SettingMessageBotton_MouseLeftButtonDown" MouseLeftButtonUp="settingMessageBotton_MouseLeftButtonUp" ToolTip="Настройки">
-                            <Image Margin="0" Cursor="Hand" Height="40" Source="Resources/settings-icon.png"/>
-                        </Grid>
+                    <StackPanel Height="51" VerticalAlignment="Bottom">
                         <Grid x:Name="exitMessageBotton" Height="50" Margin="0" MouseLeftButtonDown="exitMessageBotton_MouseLeftButtonDown" MouseLeftButtonUp="exitMessageBotton_MouseLeftButtonUp" ToolTip="Завершить работу сервера">
                             <Image Margin="0" Cursor="Hand" Height="40" Source="Resources/exit-icon.png"/>
                         </Grid>
@@ -93,37 +87,30 @@
                             <RowDefinition/>
                             <RowDefinition Height="33"/>
                         </Grid.RowDefinitions>
-                        <TextBox x:Name="tbTextMessage" Style="{StaticResource TextBoxStyle}" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF232323" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" VerticalContentAlignment="Center" Margin="330,3,7,0"/>
+                        <TextBox x:Name="tbTextMessage" Style="{StaticResource TextBoxStyle}" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF232323" FontFamily="/Forwarder Server;component/Resources/#Helvetica CE" VerticalContentAlignment="Center" Margin="330,3,7,0" TextChanged="TBTextMessage_TextChanged"/>
                         <Label Content="Поиск:" HorizontalAlignment="Left" Width="53" Margin="276,5,0,0" Height="26" VerticalAlignment="Top"/>
                         <ListBox x:Name="lbMessages" Margin="15,37,10,5"/>
                         <Label Content="Журнал:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="78" Margin="15,5,0,0"/>
-                        <Button Content="Очистить журнал" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,5,189,0" VerticalAlignment="Top" Width="152" Grid.Row="1" Cursor="Hand" Height="22"/>
-                        <Button Content="Сохранить как ..." Style="{StaticResource MainButtonStyle}" HorizontalAlignment="Right" Margin="0,5,10,0" VerticalAlignment="Top" Width="160" Grid.Row="1" Cursor="Hand" Height="22"/>
+                        <Button x:Name="bClear" Content="Очистить журнал" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,5,189,0" VerticalAlignment="Top" Width="152" Grid.Row="1" Cursor="Hand" Height="22" Click="BClear_Click"/>
+                        <Button x:Name="bSave" Content="Сохранить как ..." Style="{StaticResource MainButtonStyle}" HorizontalAlignment="Right" Margin="0,5,10,0" Width="160" Grid.Row="1" Cursor="Hand" Click="BSave_Click" Height="22" VerticalAlignment="Top"/>
                         <Image Width="22" Margin="260,7,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Resources/search.png"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="PageClients" Height="0" Width="0">
                     <Grid>
-                        <ListBox x:Name="lbUsers" Style="{StaticResource styleListBox}" Margin="15,37,10,70"/>
+                        <ListBox x:Name="lbUsers" Style="{StaticResource styleListBox}" Margin="15,37,10,38"/>
                         <Label Content="Подключенные пользователи:" HorizontalAlignment="Left" Margin="15,5,0,0" VerticalAlignment="Top"/>
-                        <TextBox Style="{StaticResource TextBoxStyle}" Height="28" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="330,3,7,0" VerticalAlignment="Top"/>
-                        <Label Content="Поиск:" HorizontalAlignment="Left" Margin="276,5,0,0" VerticalAlignment="Top"/>
-                        <Button Content="Отключить клиента" Style="{StaticResource ButtonStyle}" Margin="0,0,10,39" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="181" Cursor="Hand" ToolTip="Будет прервана связь с выбранным пользователем."/>
-                        <Label Content="Введите сообщение:" Height="23" Width="128" Margin="15,0,0,6" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <TextBox Height="28" Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Margin="148,0,205,3" VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
-                        <Button Content="Отправить сообщение" Style="{StaticResource MainButtonStyle}" HorizontalAlignment="Right" Margin="0,0,10,6" Width="181" Height="22" VerticalAlignment="Bottom" Cursor="Hand" ToolTip="Вы можете отправить сообщение пользователю."/>
-                        <Image Width="22" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Resources/search.png" Margin="260,7,0,0"/>
+                        <Button x:Name="bCloseConnection" Content="Отключить клиента" Style="{StaticResource MainButtonStyle}" Margin="0,423,10,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="181" Cursor="Hand" ToolTip="Будет прервана связь с выбранным пользователем." Click="BCloseConnection_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="PageGlobalMessage" Height="0" Width="0">
                     <Grid>
                         <Label Content="Используя данную функцию вы разошлете сообщение всем подключенным клиентам." Height="29" Width="547" HorizontalAlignment="Left" Margin="15,5,0,0" VerticalAlignment="Top" FontStyle="Italic" Background="{x:Null}" Foreground="#FF5B5B5B"/>
-                        <TextBox Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Margin="12,60,7,280" UndoLimit="1000"/>
-                        <Button Content="Отправить сообщение" Style="{StaticResource MainButtonStyle}" Width="170" Margin="0,0,10,253" HorizontalAlignment="Right" Height="22" VerticalAlignment="Bottom" Cursor="Hand"/>
+                        <TextBox x:Name="tbMessage" Style="{StaticResource TextBoxStyle}" TextWrapping="Wrap" Margin="12,60,7,280" UndoLimit="1000"/>
+                        <Button x:Name="bSend" Content="Отправить сообщение" Style="{StaticResource MainButtonStyle}" Width="170" Margin="0,0,10,253" HorizontalAlignment="Right" Height="22" VerticalAlignment="Bottom" Cursor="Hand" Click="BSend_Click"/>
                         <Label Content="Ваше сообщение:" HorizontalAlignment="Left" Margin="15,34,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem>
-
             </TabControl>
         </Grid>
     </Grid>

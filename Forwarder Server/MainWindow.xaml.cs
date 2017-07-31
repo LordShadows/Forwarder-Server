@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.IO;
 
 namespace Forwarder_Server
 {
@@ -51,6 +52,8 @@ namespace Forwarder_Server
 
         Thread _serverThread;
 
+        public static List<String> Journal = new List<String>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -64,8 +67,6 @@ namespace Forwarder_Server
                 IsBackground = true
             };
             _serverThread.Start();
-
-            //lbUsers.Items.Add(new AccountDataContext("127.0.0.1:22222", "Анастасия Юрьевна"));
         }
 
         #region Реализация кнопок управления
@@ -466,16 +467,6 @@ namespace Forwarder_Server
             }
         }
 
-        private void SettingMessageBotton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            settingMessageBotton.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC8C8C8"));
-        }
-
-        private void settingMessageBotton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            settingMessageBotton.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF0F0F0"));
-        }
-
         private void exitMessageBotton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             exitMessageBotton.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC8C8C8"));
@@ -488,22 +479,12 @@ namespace Forwarder_Server
             exitMessageBotton.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF0F0F0"));
         }
 
-        private void aboutMessageBotton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            aboutMessageBotton.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC8C8C8"));
-        }
-
-        private void aboutMessageBotton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            aboutMessageBotton.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF0F0F0"));
-        }
-
-        private class AccountDataContext
+        public class AccountDataContext
         {
             public AccountDataContext(string id, string name)
             {
                 this.ID = id;
-                if(name == "")
+                if(name == " ()")
                     this.Name = "Пользователь не авторизован";
                 else
                     this.Name = name;
@@ -512,6 +493,52 @@ namespace Forwarder_Server
             public string ID { get; private set; }
 
             public string Name { get; private set; }
+        }
+
+        private void TBTextMessage_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            lbMessages.Items.Clear();
+            foreach (var item in Journal)
+            {
+                if (item.ToLower().Contains(tbTextMessage.Text.ToLower())) lbMessages.Items.Add(item);
+            }
+        }
+
+        private void BClear_Click(object sender, RoutedEventArgs e)
+        {
+            Journal.Clear();
+            lbMessages.Items.Clear();
+        }
+
+        private void BSave_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog()
+            {
+                FileName = "Document",
+                DefaultExt = ".text",
+                Filter = "Text documents (.txt)|*.txt"
+            };
+
+            if(saveDialog.ShowDialog() == true)
+            {
+                File.WriteAllLines(saveDialog.FileName, Journal, Encoding.UTF8);
+            }
+        }
+
+        private void BCloseConnection_Click(object sender, RoutedEventArgs e)
+        {
+            if(lbUsers.SelectedIndex >= 0)
+            {
+                Sources.Server.EndUser(Sources.Server.USERSLIST.Find(x => x.UserID == ((AccountDataContext)lbUsers.SelectedItem).ID));
+            }
+        }
+
+        private void BSend_Click(object sender, RoutedEventArgs e)
+        {
+            if(tbMessage.Text != "")
+            {
+                Sources.Server.SendGlobalMessage(tbMessage.Text);
+            }
         }
     }
 }

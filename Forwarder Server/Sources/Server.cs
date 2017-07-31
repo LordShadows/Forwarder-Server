@@ -42,6 +42,7 @@ namespace Forwarder_Server.Sources
                 return;
             USERSLIST.Add(user);
             Functions.AddJournalEntry($": {user.UserID} Пользователь подключился.");
+            Functions.UpdateUserList();
             countUsers++;
         }
 
@@ -52,6 +53,7 @@ namespace Forwarder_Server.Sources
             USERSLIST.Remove(user);
             user.End();
             Functions.AddJournalEntry($": {user.UserID} {user.UserName} Пользователь отключился.");
+            Functions.UpdateUserList();
             countUsers--;
         }
 
@@ -69,7 +71,7 @@ namespace Forwarder_Server.Sources
         {
             for (int i = 0; i < countUsers; i++)
             {
-                USERSLIST[i].SendMessage("GlobalMessage", new String[] { text });
+                if(USERSLIST[i].AuthSuccess) USERSLIST[i].SendMessage("GlobalMessage", new String[] { text });
             }
         }
 
